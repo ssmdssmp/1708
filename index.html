@@ -7,6 +7,8 @@
   <title>Guber Studio</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="normalize.css" />
+  <!-- подключение ajax -->
+  <script src="./assets/js/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -104,17 +106,42 @@
     </section>
 
     <section class="main-form">
-      <form method="post" action="form.php">
-        <div>
-          <label for="say">What greeting do you want to say?</label>
-          <input class="form-number" name="form-number" type="text" pattern="^\+?3?8?(0[5-9][0-9]\d{7})$" value="+380" required 
-            placeholder="+38(095)1437783"
-          >
-        </div>
-        <div>
-          <button>Send my нюдс</button>
-        </div>
-      </form>
+      <div>
+        <label for="say">What your name PES?</label>
+        <input id="name_input" type="text" value="">
+      </div>
+      <div>
+        <label for="say">What your number PES?</label>
+        <input id="number_input" type="text" pattern="^\+?3?8?(0[5-9][0-9]\d{7})$" value="+380" required
+          placeholder="+38(095)1437783">
+      </div>
+      <div>
+        <button onClick="sendData()">Send my нюдс</button>
+        <script>
+          function sendData() {
+            var name = document.getElementById("name_input").value;
+            var phone = document.getElementById("number_input").value;
+            //send data to php file
+            $.ajax({
+              type: "POST",  //type of method
+              url: "./backEnd/main.php",  //your page
+              data: { name: name, phone: phone },// passing the values
+              success: function (res) {
+                try {
+                  var obj = jQuery.parseJSON(res);
+                  alert(obj.responseMsg);
+                } catch (err) {
+                  console.log("Error! result from php:", res);
+                  alert("Error! result from php: \"" + res + "\"");
+                }
+
+              }
+
+
+            });
+          }
+        </script>
+      </div>
     </section>
 
 
