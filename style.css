@@ -18,6 +18,7 @@ body {
 .equip-item-description:nth-child(even) {
   order: 2;
 }
+
 /*nav*/
 
 .wrapper {
